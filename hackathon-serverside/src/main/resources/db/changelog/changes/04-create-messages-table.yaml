@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-messages-table
+      author: admin
+      changes:
+        - createTable:
+            tableName: messages
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: type
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: text
+                  type: varchar(256)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: conversation_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+                    referencedTableName: conversations
+                    referencedColumnNames: id
+                    foreignKeyName: fk_conversations_messages_conversations
