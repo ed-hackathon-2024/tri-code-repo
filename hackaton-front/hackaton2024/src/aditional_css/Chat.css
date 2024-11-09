@@ -33,15 +33,20 @@
 }
 .inputMess button
 {
-    width: 5%;
+    width: 10%;
     height: 85%;
     margin-top: 4px;
     border-radius: 15px;
 }
 .inputMess button img
 {
-    width: 90%;
+    margin-top: 2px;
     height: 90%;
+}
+.all
+{
+    display: flex;
+    flex-direction: row;
 }
 .inputText
 {
@@ -52,4 +57,28 @@
     background-color: hsl(0, 0%, 25%);
     border: none;
     font-size: 1.5em;
+}
+.chats
+{
+    margin-top: 5vh;
+    margin-right: 2vw;
+    width: 25vw;
+    height: 80vh;
+    background-color: black;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.history
+{
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+}
+.history button
+{
+    height: 50px;
+    border-radius: 0;
+    border: 2px solid hsl(0, 0%, 30%);
 }
