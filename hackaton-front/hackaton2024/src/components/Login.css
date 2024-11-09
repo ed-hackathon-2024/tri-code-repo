@@ -27,7 +27,11 @@
 }
 .regForm
 {
-    display: none;
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-around;
+    align-items: center;
 }
 .loginForm
 {
@@ -44,6 +48,14 @@
     width: 80%;
     height: 20%;
 }
+.regForm input
+{
+    border-radius: 10px;
+    font-size: 1.5rem;
+    width: 80%;
+    margin-bottom: 10px;
+    height: 20%;
+}
 .pushLogin{
     width: 70%;
     font-size: 1.5rem;
@@ -51,6 +63,13 @@
     color: black;
     background-color: azure;
     border-radius: 25px;
+}
+.sexSelect{
+    border-radius: 10px;
+    font-size: 1.5rem;
+    width: 80%;
+    height: 20%;
+    margin-bottom: 20px;
 }
 .error {
     color: red;
