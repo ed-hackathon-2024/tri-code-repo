@@ -3,6 +3,7 @@
     width: 100%;
     min-height: 10%;
     display: flex;
+    margin-bottom: 10px;
 }
 .messText
 {
@@ -19,9 +20,11 @@
 }
 .pidrText
 {
-    background: linear-gradient(90deg, hsl(313, 100%, 50%), hsl(300, 100%, 20%));
+    background: rgb(238,174,202);
+background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
     background-clip: text;
     margin-right: 3px;
+    padding-left: 5px;
     margin-top: 3px;
 }
 .pidrText h2
@@ -36,8 +39,18 @@
 .triangle {
     width: 0;
     height: 0;
-    margin-top: 15px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 10px solid hsl(0, 0%, 20%);
+    position: relative;
+  
+    &::after {
+      content: " ";
+      position: absolute;
+      width: 0;
+      height: 0;
+      bottom: -17px;
+      right: -5px;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 9px solid hsl(0, 0%, 20%); 
+      transform: rotate(270deg);
+    }
 }

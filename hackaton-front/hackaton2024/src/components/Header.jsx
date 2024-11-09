@@ -2,11 +2,25 @@
 import React, { useEffect, useRef } from 'react';
 import '../components_css/Header.css';
 import '../aditional_css/text.css';
+import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png'
 
 const Header = () => {
   const iconMenuRef = useRef(null);
   const menuBodyRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleProfileClick = (e) => {
+    e.preventDefault(); 
+    navigate("/profile"); 
+    window.location.reload();
+  };
+
+  const handleLogoClick = (e) => {
+    e.preventDefault();
+    navigate("/chat");
+    window.location.reload();
+  };
 
   useEffect(() => {
     const handleGotoClick = (e) => {
@@ -48,7 +62,7 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header__container _container">
-        <a href="#" className="header__logo">
+        <a onClick={handleLogoClick} href="#" className="header__logo">
           <img src={logo} alt="Logo" className='logoPic' />
         </a>
         <div className="header__menu menu">
@@ -73,7 +87,7 @@ const Header = () => {
                 </a>
               </li>
               <li>
-                <a data-goto=".page_section_4" href="#" className="menu__link custome-underline">
+                <a href="#" onClick={handleProfileClick} className="menu__link custome-underline">
                   Profile
                 </a>
               </li>
