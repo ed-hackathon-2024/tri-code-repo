@@ -6,6 +6,7 @@ import edit from "../assets/edit.png"
 function Profile(props)
 {
     const [infoUser, setInfoUser] = useState(null);
+    const [features, setFeatures] = useState([]);
 
     const getToken = () => {
         return localStorage.getItem("token");
@@ -32,19 +33,60 @@ function Profile(props)
 
     useEffect(() => {
         fetchUser();  // Викликаємо `fetchUser` при завантаженні компонента
+
+        const fetchFeatures = async () => {
+            try {
+                const token = getToken();
+                const response = await fetch("http://localhost:8088/api/features", {
+                    method: "GET",
+                    headers: {
+                        "User-Agent": "insomnia/10.1.1",
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                
+                if (response.ok) {
+                    const dataF = await response.json();
+                    setFeatures(dataF);  // Оновлення стану з отриманими даними
+                } else {
+                    console.error("Failed to fetch features:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching features:", error);
+            }
+        };
+
+        fetchFeatures();
     }, []);
+
+    const deleteFeature = async (question) => {
+        try {
+            const token = getToken();
+            
+            const response = await fetch("http://localhost:8088/api/features/by-question", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "User-Agent": "insomnia/10.1.1",
+                    Authorization: `Bearer ${token}`, // Замініть на ваш токен
+                },
+                body: JSON.stringify({ question: question }),  // Відправка `question` в тілі запиту
+            });
+
+            if (response.ok) {
+                console.log("Feature deleted successfully");
+                setFeatures(features.filter((feature) => feature.question !== question)); // Оновлення стану без видаленого елемента
+            } else {
+                console.error("Failed to delete feature:", response.statusText);
+            }
+        } catch (error) {
+            console.error("Error deleting feature:", error);
+        }
+    };
 
     if (!infoUser) {
         return <div>Loading...</div>; // Відображення під час завантаження
     }
-
-    let data = [
-        {question: "question1", answer: "answer1"},
-        {question: "question2", answer: "answer2"},
-        {question: "question3", answer: "answer3"},
-        {question: "question4", answer: "answer4"},
-        {question: "question5", answer: "answer5"}
-    ];
 
     fetchUser;
 
@@ -63,9 +105,11 @@ function Profile(props)
             <div className="zahadkaOtZakaFresko">
                 <div className="wtfIsThat"><h2>Questions and answers</h2></div>
                 <div className="QAndA">
-                    {data.map((number) => <div key={number.answer} className="oneRow"><h2>{number.question}</h2> <h2>{number.answer}</h2>
+                    {features.map((number) => <div key={number.id} className="oneRow"><h2>{number.question}</h2> <h2>{number.answer}</h2>
                     <div className="btnsInside">
-                        <button className="btnDel" /*onClick={() => delete function in DB}*/><img src={trash} /></button>
+                        <button className="btnDel" 
+                            onClick={() => deleteFeature(number.question)}
+                        ><img src={trash} /></button>
                         <button className="btnEdit" //same shit
                         ><img src={edit} /></button>
                         </div>

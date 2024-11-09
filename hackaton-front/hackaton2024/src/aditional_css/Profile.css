@@ -97,7 +97,9 @@
 }
 .oneRow h2
 {
-    overflow-x: scroll;
+    overflow-y: scroll;
+    max-width: 40%;
+    font-size: 1rem;
 }
 .oneRow h2::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
