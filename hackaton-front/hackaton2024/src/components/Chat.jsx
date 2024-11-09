@@ -1,14 +1,17 @@
 import "../aditional_css/Chat.css";
 import pic from "../assets/send.svg"
 import mic from "../assets/mic.png"
-import Message from "./MessageAva";
+import MessageAva from "./MessageAva";
+import MessagePers from "./MessagePers";
 
 function Chat()
 {
     return(<>
         <div className="containerChat">
             <div className="bodyChat">
-                <Message text="bebebe test mor more "/>
+                <MessageAva text="ja robot dolbojob" />
+                <MessagePers text="Pizdec ja hz co take "/>
+                
             </div>
             <div className="inputMess">
                 <button><img src={mic}/></button>
