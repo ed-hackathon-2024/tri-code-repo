@@ -7,14 +7,15 @@ import MessagePers from "./MessagePers";
 function Chat() {
   const [prevChats, setPrevChats] = useState([]);
   const [newChatTitle, setNewChatTitle] = useState("");
-  const [currentChat, setCurrentChat] = useState(null); // Stores the selected conversation
+  const [currentChat, setCurrentChat] = useState(null);
+  const [message, setMessage] = useState(""); // State for the new message input
 
   const getToken = () => {
     return localStorage.getItem("token");
   };
 
   const fetchChats = async () => {
-    const token = getToken(); 
+    const token = getToken();
 
     const response = await fetch("http://localhost:8088/api/conversation", {
       method: "GET",
@@ -60,7 +61,7 @@ function Chat() {
 
   const fetchConversationByTitle = async (title) => {
     const token = getToken();
-  
+
     const response = await fetch(`http://localhost:8088/api/conversation/by-title?title=${encodeURIComponent(title)}`, {
       method: "GET",
       headers: {
@@ -69,7 +70,7 @@ function Chat() {
         Authorization: `Bearer ${token}`,
       },
     });
-  
+
     if (response.ok) {
       const conversation = await response.json();
       setCurrentChat(conversation);
@@ -77,12 +78,49 @@ function Chat() {
       console.error("Failed to fetch conversation:", response.statusText);
     }
   };
+
+  // Function to send a message
+  const sendMessage = async () => {
+    if (!message || !currentChat) {
+      return; // Don't send if message is empty or no chat is selected
+    }
+  
+    const token = getToken();
+  
+    try {
+      const response = await fetch("http://localhost:8088/api/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "User-Agent": "insomnia/10.1.1",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          conversationTitle: currentChat.title,
+          message: message,
+        }),
+      });
+  
+      if (response.ok) {
+        // Clear the input field
+        setMessage("");
+  
+        // Fetch the updated conversation immediately after sending the message
+        fetchConversationByTitle(currentChat.title);
+      } else {
+        console.error("Failed to send message:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+    }
+  };
   
 
   useEffect(() => {
     console.log("Bearer token:", getToken());
+    console.log("Message state changed:", message);
     fetchChats();
-  }, []);
+  }, [message]);
 
   return (
     <>
@@ -117,8 +155,7 @@ function Chat() {
           <div className="bodyChat">
             {currentChat ? (
               <>
-                {/* Display the title at the top */}
-                <p className="chatTitle">{currentChat.title}</p> 
+                <p className="chatTitle">{currentChat.title}</p>
                 {currentChat.messages.map((msg, idx) => (
                   msg.sender === "bot" ? 
                     <MessageAva key={idx} text={msg.text} /> : 
@@ -126,12 +163,18 @@ function Chat() {
                 ))}
               </>
             ) : (
-              <p>Select a chat to view messages</p> 
+              <p>Select a chat to view messages</p>
             )}
           </div>
           <div className="inputMess">
-            <input type="text" className="inputText" placeholder="Type a message" />
-            <button>
+            <input
+              type="text"
+              className="inputText"
+              placeholder="Type a message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button onClick={sendMessage}>
               <img src={pic} alt="send" />
             </button>
           </div>
