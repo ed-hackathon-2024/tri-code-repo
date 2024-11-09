@@ -4,7 +4,7 @@ import MessageAva from "./MessageAva";
 import MessagePers from "./MessagePers";
 
 function Chat()
-{
+{ 
     let prevChats = [
         {title: 1},
         {title: 2},
