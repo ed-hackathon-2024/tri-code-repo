@@ -1,0 +1,59 @@
+.container
+{
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    height: 70vh;
+    background-color: hsl(0, 0%, 0%, 0.1);
+    border-radius: 3%;
+    overflow: hidden;
+    border: 1px solid hsl(0, 0%, 0%);;
+}
+.buttons
+{
+    width: 100%;
+    height: 15%;
+    background-clip: text;
+}
+.logBtn
+{
+    background: linear-gradient(90deg, rgb(0, 195, 255), rgb(255, 0, 166));
+    width: 50%;
+    height: 100%;
+    border-radius: 15px;
+    background-clip: text;
+    color: transparent;
+
+}
+.regForm
+{
+    display: none;
+}
+.loginForm
+{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+    justify-content: space-around;
+    align-items: center;
+}
+.loginForm input
+{
+    border-radius: 10px;
+    font-size: 1.5rem;
+    width: 80%;
+    height: 20%;
+}
+.pushLogin{
+    width: 70%;
+    font-size: 1.5rem;
+    height: 20%;
+    color: black;
+    background-color: azure;
+    border-radius: 25px;
+}
+.error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
