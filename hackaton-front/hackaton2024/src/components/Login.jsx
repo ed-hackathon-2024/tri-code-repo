@@ -6,14 +6,13 @@ function Login() {
     const [content, setContent] = useState("login");
     const [error, setError] = useState("");
     const [isOpen, setIsOpen] = useState(false);
-    const [token, setToken] = useState(localStorage.getItem("token") || ""); // Состояние для токена
 
     // Поля для логина и регистрации
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
-    const [birthDate, setBirthDate] = useState("");
+    const [birthDate, setBirthDate] = useState(""); // поле для даты рождения
     const [sex, setSex] = useState("Male");
 
     const openPopup = () => setIsOpen(true);
@@ -69,19 +68,13 @@ function Login() {
 
             const data = await response.json();
             console.log("Login Response:", data);
-            
-            // Сохраняем токен и обновляем состояние
-            const receivedToken = data.token; // Обновите это в соответствии с полем токена в ответе сервера
-            setToken(receivedToken);
-            localStorage.setItem("token", receivedToken); // Сохраняем токен в localStorage
-
             openPopup();
         } catch (error) {
             console.error("Login Error:", error);
         }
     };
 
-    // Функция для отправки данных регистрации с валидацией и последующей авторизацией
+    // Функция для отправки данных регистрации с валидацией
     const handleRegister = async () => {
         if (!validateEmail(email)) {
             setError("Invalid email format.");
@@ -120,9 +113,7 @@ function Login() {
 
             const data = await response.json();
             console.log("Register Response:", data);
-
-            // После успешной регистрации выполняем автоматический логин
-            await handleLogin();
+            openPopup();
         } catch (error) {
             console.error("Register Error:", error);
         }
