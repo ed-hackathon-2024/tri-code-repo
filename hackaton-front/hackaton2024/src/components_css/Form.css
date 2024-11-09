@@ -106,7 +106,7 @@
     background-color: #0056b3;
 }
 
-.popup__input input {
+.popup__input{
     width: 100%;
     padding: 10px;
     font-size: 16px;
