@@ -38,10 +38,15 @@
     height: 15%;
     background-color: hsl(0, 0%, 15%);
 }
+.whatIsInfo h2
+{
+    margin-left: 10px;
+}
 .ProfileText
 {
     color: transparent;
     border-bottom: 2px solid black;
+    margin-left: 10px;
 }
 .wtfIsThat
 {
@@ -49,29 +54,40 @@
     height: 15%;
     background-color: hsl(0, 0%, 15%);
 }
+.wtfIsThat h2
+{
+    margin-left: 10px;
+}
 .QAndA
 {
     width: 100%;
     height: 85%;
     overflow-y: scroll;
+    margin-left: 10px;
+}
+.QAndA::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
 .oneRow
 {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 2px solid black;
 }
 .btnDel
 {
     background-color: hsl(0, 100%, 40%);
-    margin-top: 2.5vh;
-    height: 5vh;
+    width: 7vh;
+    height: 7vh;
+    border-radius: 35%;
 }
 .btnEdit
 {
     background-color: hsl(136, 100%, 40%);
-    margin-top: 2.5vh;
-    height: 5vh;
+    width: 7vh;
+    height: 7vh;
+    border-radius: 35%;
 }
 .btnsInside
 {
@@ -82,4 +98,7 @@
 .oneRow h2
 {
     overflow-x: scroll;
+}
+.oneRow h2::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
 }
