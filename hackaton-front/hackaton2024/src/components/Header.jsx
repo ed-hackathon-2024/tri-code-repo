@@ -72,6 +72,11 @@ const Header = () => {
                   Contacts
                 </a>
               </li>
+              <li>
+                <a data-goto=".page_section_4" href="#" className="menu__link custome-underline">
+                  Profile
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
