@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import '../components_css/Header.css';
 import '../aditional_css/text.css';
+import logo from '../assets/logo.png'
 
 const Header = () => {
   const iconMenuRef = useRef(null);
@@ -48,7 +49,7 @@ const Header = () => {
     <header className="header">
       <div className="header__container _container">
         <a href="#" className="header__logo">
-          <img src="/assets/check-black.svg" alt="Logo" />
+          <img src={logo} alt="Logo" className='logoPic' />
         </a>
         <div className="header__menu menu">
           <div ref={iconMenuRef} className="menu__icon">
