@@ -45,6 +45,7 @@
 {
     display: flex;
     flex-direction: row;
+    padding-top: 60px;
 }
 .inputText
 {
@@ -79,4 +80,31 @@
     height: 50px;
     border-radius: 0;
     border: 2px solid hsl(0, 0%, 30%);
+}
+
+.add_section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.add_chat {
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add_chat:hover {
+    background-color: #45a049;
+}
+
+.inputText {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1em;
 }
