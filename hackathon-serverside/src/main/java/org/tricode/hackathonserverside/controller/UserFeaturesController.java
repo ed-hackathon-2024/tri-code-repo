@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.tricode.hackathonserverside.dto.feature.UserFeatureAddRequestDto;
+import org.tricode.hackathonserverside.dto.feature.UserFeatureEditRequestDto;
 import org.tricode.hackathonserverside.dto.feature.UserFeatureResponseDto;
 import org.tricode.hackathonserverside.dto.feature.UserFeaturesFindRequestDto;
 import org.tricode.hackathonserverside.service.UserFeatureService;
@@ -36,7 +37,7 @@ public class UserFeaturesController {
                 AuthenticationUtil.getAuthenticatedUser(authentication).getId(), requestDto);
     }
 
-    @PostMapping
+    @PostMapping("/add-list")
     @PreAuthorize("hasRole('ROLE_USER')")
     public void addFeaturesList(Authentication authentication,
                                 @RequestBody @Valid List<UserFeatureAddRequestDto> requestDtoList) {
@@ -50,5 +51,12 @@ public class UserFeaturesController {
                                              @Valid @RequestBody UserFeaturesFindRequestDto requestDto) {
         userFeatureService.deleteFeatureByQuestion(
                 AuthenticationUtil.getAuthenticatedUser(authentication).getId(), requestDto.question());
+    }
+
+    @PutMapping
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public UserFeatureResponseDto updateUserFeatures(Authentication authentication,
+                                                     @Valid @RequestBody UserFeatureEditRequestDto requestDto) {
+        return userFeatureService.changeAnswer(AuthenticationUtil.getAuthenticatedUser(authentication).getId(), requestDto);
     }
 }

@@ -32,9 +32,9 @@ public class ConversationController {
     @GetMapping("/by-title")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ConversationResponseDto getConversationByTitle(Authentication authentication,
-                                                          @Valid @RequestBody ConversationFindRequestDto requestDto) {
+                                                          @Valid @RequestParam String title) {
         User user = AuthenticationUtil.getAuthenticatedUser(authentication);
-        return conversationService.getConversationByTitle(user.getId(), requestDto.title());
+        return conversationService.getConversationByTitle(user.getId(), title);
     }
 
     @PostMapping

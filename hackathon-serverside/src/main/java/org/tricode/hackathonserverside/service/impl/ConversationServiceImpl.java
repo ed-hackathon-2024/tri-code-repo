@@ -77,13 +77,14 @@ public class ConversationServiceImpl implements ConversationService {
 
     @Override
     public ConversationResponseDto getConversationByTitle(Long userId, String conversationTitle) {
-        return conversationMapper
+        ConversationResponseDto responseDto = conversationMapper
                 .toDto(conversationRepository.findByTitleAndUser_Id(conversationTitle, userId)
                         .orElseThrow(() -> new EntityNotFoundException(
                                         "Conversation with title " + conversationTitle
                                                 + " not found for user with id " + userId
                                 )
                         ));
+        return responseDto;
     }
 
     @Override

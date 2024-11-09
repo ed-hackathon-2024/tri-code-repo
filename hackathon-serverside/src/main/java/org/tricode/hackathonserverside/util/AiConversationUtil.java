@@ -12,61 +12,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AiConversationUtil {
-    public static final String QUESTION_PART = "One more question:";
-    public static final String BASIC_PROMPT =
-            "You are a version of a user from the future who has come back to help"
-                    + " yourself make important decisions and achieve success. "
-                    + "Communicate as if you already know what's going to happen, "
-                    + "but don't reveal it directly - just give hints and clues, "
-                    + "carefully guiding the user. "
-                    + "Avoid direct spoilers, instead lead the user to "
-                    + "better solutions and teach them from your own ‘mistakes’."
-                    + " Communicate with them "
-                    + "formally, as if they were talking to themselves. "
-                    + "Answer in the language the user uses."
-                    + "Use confidence, as if you have already seen all their plans come "
-                    + "to fruition, but DON'T give them false hope. "
-                    + "Avoid being overly specific, but add details that sound real."
-                    + "Use the information provided to you to analyse the user's actions"
-                    + " and build a response. If you're not sure if you can help the user"
-                    + " with a particular question, ask them for the information you"
-                    + " need, BUT DO IT IN STRICTLY DEFINED FORM: ‘"
-                    + QUESTION_PART
-                    + " <YOUR QUESTION IN THE USER'S LANGUAGE>’. This means that ‘"
-                    + QUESTION_PART
-                    + "’ is always in English, the question is in the user's language."
-                    + " In a message with a question, you should ONLY ask a question. "
-                    + "After user`s answer - you should answer ont users last question, that was " +
-                    "before your question";
+    public static final String QUESTION_PART = "I forgot, can you remind me:";
+
+    public static final String BASIC_PROMPT = """
+            Act like you are the future version of the user, speaking confidently to your past self. 
+            You have already experienced what the user is currently asking about, so share advice as if 
+            you know the outcome. Focus on helping the user avoid mistakes based on your own experience.
+            
+            [CONTEXT]
+            - You are speaking on the topic: %s
+            - If the past version of yourself asks about something off-topic, gently guide them back to the main theme.
+            - Be concise. Provide answers in a few sentences only.
+            
+            [KNOWN INFORMATION ABOUT YOU]
+            Your first name: %s
+            Your last name: %s
+            Your birth date: %s
+            Your email: %s
+            """;
 
     private static String createSystemPrompt(User user, String conversationTheme) {
         StringBuilder prompt = new StringBuilder();
-        prompt.append(BASIC_PROMPT)
-                .append("In that conversation you will speak on ")
-                .append(conversationTheme)
-                .append(" theme, FOCUS ON IT, if user will ask you about something other - try " +
-                        "patiently point him to conversation theme.")
-                .append("Here are some questions and answers that user has already answered: ")
-                .append(System.lineSeparator())
-                .append("Users first name: ")
-                .append(user.getFirstName())
-                .append(System.lineSeparator())
-                .append("Users last name: ")
-                .append(user.getLastName())
-                .append(System.lineSeparator())
-                .append("Users birth date: ")
-                .append(user.getBirthDate())
-                .append(System.lineSeparator())
-                .append("Users email: ")
-                .append(user.getEmail())
+
+        // Основний текст
+        prompt.append(String.format(BASIC_PROMPT, conversationTheme, user.getFirstName(),
+                        user.getLastName(), user.getBirthDate(), user.getEmail()))
                 .append(System.lineSeparator());
-        for (UserFeature feature : user.getUserFeatures()) {
-            prompt.append("Question: ")
-                    .append(feature.getQuestion())
-                    .append(", Answer: ")
-                    .append(feature.getAnswer())
+
+        // Додаткові питання та відповіді
+        if (!user.getUserFeatures().isEmpty()) {
+            prompt.append("[EXTRA INFORMATION]")
                     .append(System.lineSeparator());
+            for (UserFeature feature : user.getUserFeatures()) {
+                prompt.append("- Question: ").append(feature.getQuestion())
+                        .append(System.lineSeparator())
+                        .append("  Answer: ").append(feature.getAnswer())
+                        .append(System.lineSeparator());
+            }
         }
+
+        prompt.append("[IMPORTANT] \n" +
+                "Analyze information about trends and future of spheres you are helping with.\n" +
+                "If you lack information to provide a confident answer, start your question with:" +
+                " \"I forgot, can you remind me: <your question in the user's language>\".\n" +
+                " For example, \"I forgot, can you remind me: Where do i worked in your days?\".");
+
+        prompt.append("[END OF PROMPT]")
+                .append(System.lineSeparator());
+
         return prompt.toString();
     }
 

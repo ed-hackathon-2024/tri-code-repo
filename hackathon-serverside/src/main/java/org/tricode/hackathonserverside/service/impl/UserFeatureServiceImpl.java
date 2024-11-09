@@ -4,6 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.tricode.hackathonserverside.dto.feature.UserFeatureAddRequestDto;
+import org.tricode.hackathonserverside.dto.feature.UserFeatureEditRequestDto;
 import org.tricode.hackathonserverside.dto.feature.UserFeatureResponseDto;
 import org.tricode.hackathonserverside.mapper.UserFeatureMapper;
 import org.tricode.hackathonserverside.model.User;
@@ -67,5 +68,21 @@ public class UserFeatureServiceImpl implements UserFeatureService {
         }
 
         userRepository.save(user);
+    }
+
+    @Override
+    public UserFeatureResponseDto changeAnswer(Long userId, UserFeatureEditRequestDto requestDto) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new EntityNotFoundException("User with id " + userId + " not found")
+        );
+        UserFeature feature = user.getUserFeatures().stream()
+                .filter(userFeature -> userFeature.getQuestion().equals(requestDto.question()))
+                .findFirst()
+                .orElseThrow(
+                        () -> new EntityNotFoundException("User with question " + requestDto.question() + " not found")
+                );
+        userFeatureMapper.updateFeatureFromRequestDto(requestDto, feature);
+        userFeaturesRepository.save(feature);
+        return userFeatureMapper.toDto(feature);
     }
 }

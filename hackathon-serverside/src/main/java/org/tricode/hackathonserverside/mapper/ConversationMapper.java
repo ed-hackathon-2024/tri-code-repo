@@ -9,7 +9,7 @@ import org.tricode.hackathonserverside.model.Conversation;
 
 import java.util.List;
 
-@Mapper(config = MapperConfig.class)
+@Mapper(config = MapperConfig.class, uses = {MessageMapper.class})
 public interface ConversationMapper {
     Conversation toModel(ConversationCreateRequestDto requestDto);
 
