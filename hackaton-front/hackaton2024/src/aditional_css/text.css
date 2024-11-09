@@ -4,6 +4,10 @@ h1{
     text-wrap: nowrap;
 }
 
+p{
+    text-align: center;
+}
+
 
 .custome-underline {
     position: relative;

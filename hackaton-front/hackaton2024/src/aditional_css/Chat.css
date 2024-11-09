@@ -1,5 +1,4 @@
-.containerChat
-{
+.containerChat {
     margin-top: 5vh;
     width: 70vw;
     height: 80vh;
@@ -9,10 +8,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow: hidden;
 }
-.bodyChat
-{
+
+.bodyChat {
     margin-top: 1%;
     background-color: hsl(0, 0%, 5%);
     width: 98%;
@@ -22,8 +20,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
-.inputMess
-{
+
+.inputMess {
     width: 98%;
     height: 10%;
     background-color: hsl(0, 0%, 20%);

@@ -1,19 +1,28 @@
-import { useState } from 'react'
-import './App.css'
-import Login from './components/Login'
-import Title from './components/Title'
-import Chat from './components/Chat'
-import Profile from './components/Profile'
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Login from './components/Login';
+import Title from './components/Title';
+import Chat from './components/Chat';
 
 function App() {
-  const [count, setCount] = useState(0)
-  
-
   return (
-    <>
-      <Chat />
-    </>
-  )
+    <Router>
+      <Routes>
+        {/* Домашняя страница с заголовком и логином */}
+        <Route 
+          path="/" 
+          element={
+            <>
+              <Title />
+              <Login />
+            </>
+          } 
+        />
+        {/* Страница чата */}
+        <Route path="/chat" element={<Chat />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
