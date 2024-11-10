@@ -16,5 +16,5 @@ public interface UserFeatureService {
 
     void deleteFeatureByQuestion(Long userId, String question);
 
-    UserFeatureResponseDto changeAnswer(Long userId, UserFeatureEditRequestDto requestDto);
+    UserFeatureResponseDto updateFeature(Long userId, UserFeatureEditRequestDto requestDto);
 }

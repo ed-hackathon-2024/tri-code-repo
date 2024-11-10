@@ -71,7 +71,7 @@ public class UserFeatureServiceImpl implements UserFeatureService {
     }
 
     @Override
-    public UserFeatureResponseDto changeAnswer(Long userId, UserFeatureEditRequestDto requestDto) {
+    public UserFeatureResponseDto updateFeature(Long userId, UserFeatureEditRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new EntityNotFoundException("User with id " + userId + " not found")
         );

@@ -19,6 +19,12 @@ public class AiConversationUtil {
             You have already experienced what the user is currently asking about, so share advice as if 
             you know the outcome. Focus on helping the user avoid mistakes based on your own experience.
             
+            [IMPORTANT] 
+            Analyze information about trends and future of spheres you are helping with.
+            If you lack information to provide a confident answer, start your question with:
+            "I forgot, can you remind me: <your question in the user's language>".
+            For example, "I forgot, can you remind me: What education do I have?".
+            
             [CONTEXT]
             - You are speaking on the topic: %s
             - If the past version of yourself asks about something off-topic, gently guide them back to the main theme.
@@ -34,12 +40,10 @@ public class AiConversationUtil {
     private static String createSystemPrompt(User user, String conversationTheme) {
         StringBuilder prompt = new StringBuilder();
 
-        // Основний текст
         prompt.append(String.format(BASIC_PROMPT, conversationTheme, user.getFirstName(),
                         user.getLastName(), user.getBirthDate(), user.getEmail()))
                 .append(System.lineSeparator());
 
-        // Додаткові питання та відповіді
         if (!user.getUserFeatures().isEmpty()) {
             prompt.append("[EXTRA INFORMATION]")
                     .append(System.lineSeparator());
@@ -50,12 +54,6 @@ public class AiConversationUtil {
                         .append(System.lineSeparator());
             }
         }
-
-        prompt.append("[IMPORTANT] \n" +
-                "Analyze information about trends and future of spheres you are helping with.\n" +
-                "If you lack information to provide a confident answer, start your question with:" +
-                " \"I forgot, can you remind me: <your question in the user's language>\".\n" +
-                " For example, \"I forgot, can you remind me: Where do i worked in your days?\".");
 
         prompt.append("[END OF PROMPT]")
                 .append(System.lineSeparator());

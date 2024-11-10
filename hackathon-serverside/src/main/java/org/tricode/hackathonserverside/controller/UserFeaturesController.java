@@ -57,6 +57,6 @@ public class UserFeaturesController {
     @PreAuthorize("hasRole('ROLE_USER')")
     public UserFeatureResponseDto updateUserFeatures(Authentication authentication,
                                                      @Valid @RequestBody UserFeatureEditRequestDto requestDto) {
-        return userFeatureService.changeAnswer(AuthenticationUtil.getAuthenticatedUser(authentication).getId(), requestDto);
+        return userFeatureService.updateFeature(AuthenticationUtil.getAuthenticatedUser(authentication).getId(), requestDto);
     }
 }
